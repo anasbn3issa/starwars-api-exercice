@@ -1,0 +1,28 @@
+{
+  "name": "starwars-api-exercice",
+  "version": "1.0.0",
+  "description": "basic api call",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anasbn3issa/starwars-api-exercice.git"
+  },
+  "keywords": [
+    "nodejs",
+    "api",
+    "request"
+  ],
+  "author": "Anas BEN AISSA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anasbn3issa/starwars-api-exercice/issues"
+  },
+  "homepage": "https://github.com/anasbn3issa/starwars-api-exercice#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "request": "^2.88.2"
+  }
+}

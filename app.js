@@ -14,49 +14,38 @@ const getCharacters = (req, res) => {
         console.log(error);
         } else {
         const data = JSON.parse(body);
-        res.send(data.results);
+        res.send(data);
         }
     });
 };
 app.get('/characterz', getCharacters);
 
+
+
 const getCharactersFromFilm = (req, res) => {
     let toReturn = [];
-    const movieId = req.params.movieid;
-    const url = `https://swapi-api.hbtn.io/api/films/${movieId}`;
-    let data;
-    request(url, (error, response, body) => {
+    const url = 'https://swapi-api.hbtn.io/api/films/' + req.params.movieid + '/';
+    request(url,{json:true}, (error, response, body) => {
         if (error) {
-            console.log(error);
+        console.log(error);
         } else {
-            data = JSON.parse(body);
-            console.log(data);
-            /** data contains : 
-            {
-            title: 'Return of the Jedi',
-            .....
-            characters: [
-                'https://swapi-api.hbtn.io/api/people/1/',
-                'https://swapi-api.hbtn.io/api/people/2/',
-                ....
-            ],
-            
-            */
+            body.characters.forEach( (characterUrl) => { // tested async here , still not working 
+                console.log(characterUrl);
+                request(
+                    characterUrl, {json:true} , (error, response, body) => {
+                        if(error) {
+                            console.log(error);
+                        } else {
+                            console.log(body); // console.log contains the data correctly 
+                            toReturn.push(body.name);
+                        }
+                    }
+                )
+            });
+        res.send(toReturn); // but still returning empty array , i must be missing some async await somewhere 
         }
-    }).then(
-        data.characters.forEach(characterUrl => {
-            /**
-            w houni y9oli cannot read properties of undefined, (reading characters) or que 3aml .then .. 
-             */
-            request(characterUrl,(error, response, body) => {
-                const charData = JSON.parse(body);
-                console.log(charData);
-                toReturn.push(charData.name);
-            })
-        })
-    )
-    res.send(toReturn)
-};
+    });
+}
 
 app.get('/characters/:movieid',getCharactersFromFilm);
 
